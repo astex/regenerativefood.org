@@ -199,12 +199,7 @@ define(
         var v = this;
         _.serial([
           $.proxy(v.model.fetch, v.model),
-          $.proxy(v.model.fetchOwners, v.model),
-          function(cbs_) {
-            _.parallel(
-              v.model.map(function(entry) { return $.proxy(entry.fetchSrc, entry); })
-            )(cbs_);
-          }
+          $.proxy(v.model.fetchOwners, v.model)
         ])(cbs);
       },
 
@@ -256,6 +251,12 @@ define(
       initialize: function(opts) {
         this.edit = opts.edit;
         V.Base.prototype.initialize.apply(this, [opts]);
+      },
+
+      fetch: function(cbs) {
+        if (this.edit)
+          return _.finish(cbs);
+        this.model.fetchSrc(cbs);
       },
 
       getTemplateArgs: function() {
