@@ -32,7 +32,7 @@ define(
           function(cbs_) {
             if (v.model.get('user_id'))
               return _.finish(cbs_);
-            v.$el.append((new V.Splash()).on('ready', ready).el);
+            v.$el.append((new V.Splash()).on('ready', function() { _.finish(cbs); }).el);
           }
         ])(cbs);
       },
