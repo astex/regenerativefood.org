@@ -37,14 +37,14 @@ button {
   cursor: pointer;
   border: none;
 }
-button:hover { background: rgba(0, 0, 0, 0.2); }
+button:hover, button.active { background: rgba(0, 0, 0, 0.2); }
 button.raised { box-shadow: 3px 3px 3px #999; }
 button.blue {
   transition: background-color .1s ease-in-out;
   background-color: #4520ff;
   color: #ffffff;
 }
-button.blue:hover {
+button.blue:hover, button.blue.active {
   background-color: #3510dd;
   text-decoration: inherit;
 }
@@ -64,6 +64,10 @@ header {
 header a, header a:active, header a:visited, header a:hover {
   color: inherit;
 }
+header button {
+  line-height: inherit;
+  padding: 0px 15px;
+}
 
 section.body {
   height: calc(100vh - 3em);
@@ -77,6 +81,8 @@ section.body.splash {
   background-position: center;
   background-size: cover;
 }
+
+.right { float: right; }
 
 .error {
   transition: opacity .1s ease-in-out;

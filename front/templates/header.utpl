@@ -1,1 +1,2 @@
 <a href="/">Regenerative Food</a>
+<button class="right" data-popup=".user"><%- session.user.get('email') %></button>
