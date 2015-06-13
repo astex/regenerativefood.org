@@ -1,2 +1,5 @@
 <a href="/">Regenerative Food</a>
 <button class="right" data-popup=".user"><%- session.user.get('email') %></button>
+<div class="medium popup user menu">
+  <button data-action="logout">Log Out</button>
+</div>

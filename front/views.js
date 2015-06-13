@@ -45,6 +45,18 @@ define(
             .on('ready', function() { _.finish(cbs); })
             .el
         );
+      },
+
+      events: {'click': 'hidePopups'},
+
+      hidePopups: function(e) {
+        var $el = $(e.target);
+
+        if (!$el.data('popup') && !$el.closest('.popup').length) {
+          if ($('.popup').is(':visible')){
+            $('.popup').removeClass('expanded');
+          }
+        }
       }
     });
 
@@ -73,7 +85,15 @@ define(
       el: '<header></header>',
       t: _.template(t_header),
 
-      getTemplateArgs: function() { return {session: this.session}; }
+      getTemplateArgs: function() { return {session: this.session}; },
+
+      events: {
+        'click [data-popup]': 'popup'
+      },
+
+      popup: function(e) {
+        this.$($(e.currentTarget).data('popup')).toggleClass('expanded');
+      }
     });
 
     V.Splash = V.Base.extend({

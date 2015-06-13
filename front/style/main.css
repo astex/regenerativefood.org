@@ -82,6 +82,29 @@ section.body.splash {
   background-size: cover;
 }
 
+.popup {
+  position: absolute;
+  background-color: #ffffff;
+  color: #000000;
+  max-height: 0px;
+  overflow-y: hidden;
+  transition: max-height .2s ease-in-out;
+  box-shadow: 0px 0px 5px #666;
+}
+.popup.expanded { max-height: 100px; }
+.popup.medium { width: 200px; }
+
+.popup.user {
+  top: 3em;
+  right: 0px;
+}
+
+.menu button {
+  display: block;
+  width: 100%;
+  text-align: right;
+}
+
 .right { float: right; }
 
 .error {
@@ -115,5 +138,4 @@ section.body.splash {
   font-size: inherit;
 }
 .jumbo label { font-size: 1.3em; margin-bottom: 15px; }
-
 .jumbo .login { margin-top: 50px; }
