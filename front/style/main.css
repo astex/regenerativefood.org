@@ -37,6 +37,22 @@ a {
 a:active, a:visited { color: #aa6a00; }
 a:hover { color: #ffc970; }
 
+button {
+  background: inherit;
+  color: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  border: none;
+}
+button.raised {
+  box-shadow: 3px 3px 3px #999;
+}
+button.blue {
+  background-color: #4520ff;
+  color: #ffffff;
+}
+button.big { padding: 15px; font-size: 1.3em; }
+
 header {
   color: #bfff70;
   font-size: 1.5em;
@@ -65,3 +81,4 @@ section.body.splash { height: 100vh; }
 }
 .jumbo h1 { font-size: 3em; }
 .jumbo h2 { font-size: 2em; }
+.jumbo .buttons { margin-top: 100px; }
