@@ -20,7 +20,14 @@ define(
 
       fetch: function(cbs) {
         var v = this;
-        _.serial([$.proxy(v.model.fetch, v.model), $.proxy(v.model.fetchUser, v.model)])(cbs);
+        _.serial([
+          function(cbs_) {
+            if (v.model.get('user_id'))
+              return _.finish(cbs_);
+            v.model.fetch(cbs_);
+          },
+          $.proxy(v.model.fetchUser, v.model)
+        ])(cbs);
       },
 
       render: function(cbs) {
