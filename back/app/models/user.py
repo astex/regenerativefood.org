@@ -22,4 +22,4 @@ class User(ModelMixin, db.Model):
             self.password
 
     def get_dictionary(self):
-        return {'id_': self.id_, 'email': self.email}
+        return {'id': self.id_, 'email': self.email}
