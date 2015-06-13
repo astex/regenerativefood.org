@@ -24,7 +24,8 @@ define([
 
     M.User = M.Model.extend({base_url: config.url + '/user/'});
     M.Session = M.Model.extend({
-      base_url: config.url + '/session/',
+      url: config.url + '/session/',
+      idAttribute: 'user_id',
       fetchUser: M.Model.relatedFetcher({Model: M.User, name: 'user', key: 'user_id'})
     });
 
