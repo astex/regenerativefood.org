@@ -30,13 +30,14 @@ a:active, a:visited { color: #aa6a00; }
 a:hover { color: #ffc970; }
 
 button {
+  transition: background 0.1s ease-in-out;
   background: inherit;
   color: inherit;
   font-size: inherit;
   cursor: pointer;
   border: none;
 }
-button:hover { text-decoration: underline; }
+button:hover { background: rgba(0, 0, 0, 0.2); }
 button.raised { box-shadow: 3px 3px 3px #999; }
 button.blue {
   transition: background-color .1s ease-in-out;

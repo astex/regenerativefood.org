@@ -8,8 +8,8 @@
   </div>
   <div class="error"></div>
   <div class="buttons">
-    <button data-action="new">I don't have an account</button>
-    <button data-action="old">I already have an account</button>
+    <button class="big" data-action="new">I don't have an account</button>
+    <button class="big" data-action="old">I already have an account</button>
     <button class="big blue" data-action="login">Log in</button>
     <button class="big blue" data-action="signup">Sign up</button>
   </div>
