@@ -49,8 +49,9 @@ define(
     });
 
     V.Base = B.View.extend({
-      initialize: function() {
+      initialize: function(opts) {
         var v = this;
+        v.session = opts.session;
         v.fetch({
           success: function() { v.render().trigger('ready'); }
         });
