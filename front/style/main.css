@@ -22,6 +22,11 @@ h4 { font-size: 1.3em; }
 h5 { font-size: 1.1em; }
 h6 { font-weight: bold; }
 
+small {
+  font-size: .9em;
+  color: #559b00;
+}
+
 a {
   color: #aa6a00;
   text-decoration: none;
@@ -36,6 +41,7 @@ button {
   font-size: inherit;
   cursor: pointer;
   border: none;
+  outline: none;
 }
 button:hover, button.active { background: rgba(0, 0, 0, 0.2); }
 button.raised { box-shadow: 3px 3px 3px #999; }
@@ -44,11 +50,25 @@ button.blue {
   background-color: #4520ff;
   color: #ffffff;
 }
-button.blue:hover, button.blue.active {
-  background-color: #3510dd;
-  text-decoration: inherit;
+button.blue:hover, button.blue.active { background-color: #3510dd; }
+button.orange {
+  transition: background-color .1s ease-in-out;
+  background-color: #ff9f00;
+  color: #ffffff;
 }
+button.orange:hover, button.orange.active { background-color: #aa6a00; }
 button.big { padding: 15px; font-size: 1.3em; }
+button.action {
+  padding: 15px;
+  transition: background-color .1s ease-in-out, box-shadow .1s ease-in-out;
+  box-shadow: 0px 0px 3px #999;
+  border-radius: 500px;
+}
+button.action.big {
+  padding: 20px;
+  font-size: 1.5em;
+}
+button.action:hover, button.action.active { box-shadow: 0px 3px 5px #666; }
 
 label { display: block; }
 
@@ -80,6 +100,18 @@ section.body.splash {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+}
+
+section.body > h1 {
+  width: 78%;
+  max-width: 950px;
+  margin: 30px auto;
+}
+
+.actions {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
 }
 
 .popup {
@@ -139,3 +171,28 @@ section.body.splash {
 }
 .jumbo label { font-size: 1.3em; margin-bottom: 15px; }
 .jumbo .login { margin-top: 50px; }
+
+.entry {
+  margin: auto;
+  padding: 15px;
+  background-color: #ffffff;
+  width: 80%;
+  max-width: 1000px;
+  transition: box-shadow 0.2s ease-in-out, max-width 0.1s ease-in-out;
+  box-shadow: 0px 0px 3px #999;
+}
+.entry:hover { box-shadow: 0px 0px 5px #666; }
+.entry.expanded {
+  box-shadow: 0px 0px 5px #666;
+  width: 90%;
+  max-width: 1100px;
+  margin: 15px auto;
+}
+
+.entry .content { display: none; }
+.entry.expanded .content { display: block; }
+
+.entry .title {
+  font-size: 1.3em;
+  cursor: pointer;
+}

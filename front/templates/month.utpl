@@ -1,0 +1,1 @@
+<h1><%- model.format('MMMM') %> <small><%- model.format('YYYY') %></small></h1>

@@ -1,0 +1,5 @@
+<div class="actions">
+  <button class="action orange big" data-action="new">
+    <i class="icon icon-pencil"></i>
+  </button>
+</div>

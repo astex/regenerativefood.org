@@ -1,10 +1,13 @@
 define(
   [
-    'jquery', 'underscore', 'backbone', 'models',
-    'text!templates/header.utpl',
+    'jquery', 'underscore', 'backbone', 'moment', 'models',
     'text!templates/splash.utpl',
+    'text!templates/header.utpl',
+    'text!templates/list.utpl',
+    'text!templates/entry.utpl',
+    'text!templates/month.utpl',
     'underscore.crunch'
-  ], function($, _, B, M, t_header, t_splash) {
+  ], function($, _, B, moment, M, t_splash, t_header, t_list, t_entry, t_month) {
     var V = {};
 
     V.Main = B.View.extend({
@@ -32,16 +35,17 @@ define(
 
       render: function(cbs) {
         var v = this;
+        if (!v.model.get('user_id'))
+          return v.add(V.Splash, cbs);
+
         _.parallel([
+          function(cbs_) { v.add(V.Header, cbs); },
           function(cbs_) {
-            if (!v.model.get('user_id'))
-              return _.finish(cbs_);
-            v.add(V.Header, cbs_);
-          },
-          function(cbs_) {
-            if (v.model.get('user_id'))
-              return _.finish(cbs_);
-            v.add(V.Splash, cbs_);
+            v.$el.append(
+              (new V.List({session: v.model, model: new M.Entries()}))
+                .on('ready', function() { _.finish(cbs); })
+                .el
+            );
           }
         ])(cbs);
       },
@@ -86,28 +90,6 @@ define(
       getTemplateArgs: function() { return {}; },
 
       error: function(r) { this.$('.error').html(r); }
-    });
-
-    V.Header = V.Base.extend({
-      el: '<header></header>',
-      t: _.template(t_header),
-
-      getTemplateArgs: function() { return {session: this.session}; },
-
-      events: {
-        'click [data-popup]': 'popup',
-        'click [data-action=logout]': 'logout'
-      },
-
-      popup: function(e) {
-        this.$($(e.currentTarget).data('popup')).toggleClass('expanded');
-      },
-
-      logout: function() {
-        this.session.destroy({
-          success: function() { new V.Main({model: new M.Session()}); }
-        });
-      }
     });
 
     V.Splash = V.Base.extend({
@@ -184,6 +166,106 @@ define(
           error: function(m, r) { v.error('There was a problem.'); console.log(r); }
         });
       }
+    });
+
+    V.Header = V.Base.extend({
+      el: '<header></header>',
+      t: _.template(t_header),
+
+      getTemplateArgs: function() { return {session: this.session}; },
+
+      events: {
+        'click [data-popup]': 'popup',
+        'click [data-action=logout]': 'logout'
+      },
+
+      popup: function(e) {
+        this.$($(e.currentTarget).data('popup')).toggleClass('expanded');
+      },
+
+      logout: function() {
+        this.session.destroy({
+          success: function() { new V.Main({model: new M.Session()}); }
+        });
+      }
+    });
+
+    V.List = V.Base.extend({
+      el: '<section class="body"></section>',
+      t: _.template(t_list),
+      t_month: _.template(t_month),
+
+      fetch: function(cbs) {
+        var v = this;
+        _.serial([
+          $.proxy(this.model.fetch, this.model),
+          function(cbs_) {
+            _.parallel(
+              v.model.map(function(entry) { return $.proxy(entry.fetchSrc, entry); })
+            )(cbs_);
+          }
+        ])(cbs);
+      },
+
+      render: function() {
+        var v = this;
+        V.Base.prototype.render.apply(v);
+        _.chain(v.model.models)
+          .groupBy(function(entry) { return moment(entry.get('created')).format('YYYYMM'); })
+          .map(function(v, i) { return [i, v]; })
+          .sortBy(function(date_entries) { return date_entries[0]; })
+          .each(function(date_entries) {
+            _.chain(date_entries[1])
+              .sortBy(function(entry) {
+                return moment(entry.get('created')).format();
+              })
+              .each(function(entry) {
+                v.$el.prepend((new V.Entry({
+                  session: v.session,
+                  moment: moment,
+                  model: entry
+                })).el);
+              });
+            v.$el.prepend(v.t_month({
+              model: moment(date_entries[0], 'YYYYMM')
+            }));
+          });
+        return v;
+      },
+
+      events: {
+        'click [data-action=new]': 'new_'
+      },
+
+      new_: function() {
+        var entry = new M.Entry({owner_id: this.session.get('owner_id')});
+        entry.owner = this.session.user;
+
+        var entry_view = (new V.Entry({session: this.session, edit: true, model: entry}));
+        entry_view.on('ready', function() { entry_view.$('[name=title]').focus(); });
+
+        this.$el.prepend(entry_view.el);
+      }
+    });
+
+    V.Entry = V.Base.extend({
+      el: '<div class="entry"></div>',
+      t: _.template(t_entry),
+
+      initialize: function(opts) {
+        this.edit = opts.edit;
+        V.Base.prototype.initialize.apply(this, [opts]);
+      },
+
+      getTemplateArgs: function() {
+        return {
+          model: this.model, session: this.session, edit: this.edit, moment: moment
+        };
+      },
+
+      events: {'click .title': 'toggle'},
+
+      toggle: function() { this.$el.toggleClass('expanded'); }
     });
 
     return V;

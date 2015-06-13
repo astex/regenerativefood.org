@@ -29,6 +29,19 @@ define([
       fetchUser: M.Model.relatedFetcher({Model: M.User, name: 'user', key: 'user_id'})
     });
 
+    M.Entry = B.Model.extend({
+      base_url: config.url + '/entry/',
+
+      fetchSrc: function(cbs) {
+        var m = this;
+        return require([m.get('parser')], function(parse) {
+          m.set('content', parse(m.get('src')));
+          _.finish(cbs);
+        });
+      }
+    });
+    M.Entries = M.Collection.extend({model: M.Entry, url: config.url + '/entry/'});
+
     return M;
   }
 );
