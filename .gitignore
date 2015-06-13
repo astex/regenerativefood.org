@@ -3,6 +3,7 @@ __pycache__
 *.pyc
 
 # Deployment
+*.db
 run.py
 
 # Config
