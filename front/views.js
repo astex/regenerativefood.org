@@ -69,7 +69,12 @@ define(
       error: function(r) { this.$('.error').html(r); }
     });
 
-    V.Header = V.Base.extend({ el: '<header></header>', t: _.template(t_header) });
+    V.Header = V.Base.extend({
+      el: '<header></header>',
+      t: _.template(t_header),
+
+      getTemplateArgs: function() { return {session: this.session}; }
+    });
 
     V.Splash = V.Base.extend({
       el: '<section class="body splash"></section>',
