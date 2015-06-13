@@ -1,0 +1,10 @@
+# Python
+__pycache__
+*.pyc
+
+# Deployment
+run.py
+
+# Config
+config
+config.json
