@@ -9,13 +9,40 @@ define(
 
     V.Main = B.View.extend({
       el: $('body'),
+      model: new M.Session(),
 
       initialize: function() {
         var v = this;
-        var ready = _.after(1, function() { v.trigger('ready'); });
+        _.crunch({
+          pre: $.proxy(v.fetch, v),
+          post: $.proxy(v.render, v)
+        })({
+          success: function() { v.trigger('ready'); }
+        });
+      },
 
-        //v.$el.append((new V.Header()).on('ready', ready).el);
-        v.$el.append((new V.Splash()).on('ready', ready).el);
+      render: function(cbs) {
+        var v = this;
+        _.crunch([
+          function(cbs_) {
+            if (!v.model.get('user_id'))
+              return _.finish(cbs_);
+            v.$el.append((new V.Header()).on('ready', function() { _.finish(cbs_); }).el);
+          },
+          function(cbs_) {
+            if (v.model.get('user_id'))
+              return _.finish(cbs_);
+            v.$el.append((new V.Splash()).on('ready', ready).el);
+          }
+        ])(cbs);
+      },
+
+      fetch: function(cbs) {
+        var v = this;
+        _.crunch({
+          pre: $.proxy(v.model.fetch, v.model),
+          post: $.proxy(v.model.fetchUser, v.model)
+        })(cbs);
       }
     });
 
