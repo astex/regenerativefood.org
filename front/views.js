@@ -145,9 +145,18 @@ define(
         if (password != confirm_)
           return v.error('Passwords do not match.');
 
-        (new M.User({email: email, password: password})).save({}, {
-          success: function() {},
-          error: function(m, r) { v.error('There was a problem.'); console.log(r); }
+        data = {email: email, password: password};
+
+        (new M.User(data)).save({}, {
+          success: function() {
+            (new M.Session(data)).save({}, {
+              success: function(m) { (new V.Main({model: m})); },
+              error: function() { v.error(
+                'A user account was created, but we had trouble logging you in.  Try logging in normally.'
+              ); }
+            });
+          },
+          error: function(m, r) { v.error('We couldn\'t create that account.'); console.log(r); }
         });
       },
 
@@ -164,7 +173,7 @@ define(
           return v.error('Please use a valid email address.');
 
         (new M.Session({email: email, password: password})).save({}, {
-          success: function() {},
+          success: function(m) { (new V.Main({model: m})); },
           error: function(m, r) { v.error('There was a problem.'); console.log(r); }
         });
       }
