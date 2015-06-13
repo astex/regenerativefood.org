@@ -13,17 +13,14 @@ define(
 
       initialize: function() {
         var v = this;
-        _.crunch({
-          pre: $.proxy(v.fetch, v),
-          post: $.proxy(v.render, v)
-        })({
+        _.serial([$.proxy(v.fetch, v), $.proxy(v.render, v)])({
           success: function() { v.trigger('ready'); }
         });
       },
 
       render: function(cbs) {
         var v = this;
-        _.crunch([
+        _.parallel([
           function(cbs_) {
             if (!v.model.get('user_id'))
               return _.finish(cbs_);
@@ -32,17 +29,14 @@ define(
           function(cbs_) {
             if (v.model.get('user_id'))
               return _.finish(cbs_);
-            v.$el.append((new V.Splash()).on('ready', function() { _.finish(cbs); }).el);
+            v.$el.append((new V.Splash()).on('ready', function() { _.finish(cbs_); }).el);
           }
         ])(cbs);
       },
 
       fetch: function(cbs) {
         var v = this;
-        _.crunch({
-          pre: $.proxy(v.model.fetch, v.model),
-          post: $.proxy(v.model.fetchUser, v.model)
-        })(cbs);
+        _.serial([$.proxy(v.model.fetch, v.model), $.proxy(v.model.fetchUser, v.model)])(cbs);
       }
     });
 
