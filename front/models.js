@@ -12,7 +12,7 @@ define([
         return function(cbs) {
           var m = this;
           if (!m.get(opts.key))
-            _.finish(cbs);
+            return _.finish(cbs);
           (m[opts.name] = m[opts.name] || new opts.Model({id: m.get(opts.key)}))
             .fetch(cbs);
         };
