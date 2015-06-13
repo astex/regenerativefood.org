@@ -44,14 +44,20 @@ button {
   cursor: pointer;
   border: none;
 }
-button.raised {
-  box-shadow: 3px 3px 3px #999;
-}
+button:hover { text-decoration: underline; }
+button.raised { box-shadow: 3px 3px 3px #999; }
 button.blue {
+  transition: background-color .1s ease-in-out;
   background-color: #4520ff;
   color: #ffffff;
 }
+button.blue:hover {
+  background-color: #3510dd;
+  text-decoration: inherit;
+}
 button.big { padding: 15px; font-size: 1.3em; }
+
+label { display: block; }
 
 header {
   color: #bfff70;
@@ -78,7 +84,19 @@ section.body.splash { height: 100vh; }
   margin: auto;
   margin-top: 250px;
   color: #ffffff;
+  font-size: 1.3em;
 }
 .jumbo h1 { font-size: 3em; }
 .jumbo h2 { font-size: 2em; }
-.jumbo .buttons { margin-top: 100px; }
+.jumbo .buttons { margin-top: 20px; }
+.jumbo input {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, .4);
+  border: none;
+  box-shadow: none;
+  color: #ffffff;
+  font-size: inherit;
+}
+.jumbo label { font-size: 1.3em; margin-bottom: 15px; }
+
+.jumbo .login { margin-top: 50px; }
