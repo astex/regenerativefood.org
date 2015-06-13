@@ -1,10 +1,10 @@
 define(
   [
-    'jquery', 'underscore', 'backbone',
+    'jquery', 'underscore', 'backbone', 'models',
     'text!templates/header.utpl',
     'text!templates/splash.utpl',
     'underscore.crunch'
-  ], function($, _, B, t_header, t_splash) {
+  ], function($, _, B, M, t_header, t_splash) {
     var V = {};
 
     V.Main = B.View.extend({
@@ -34,7 +34,9 @@ define(
         return this;
       },
 
-      getTemplateArgs: function() { return {}; }
+      getTemplateArgs: function() { return {}; },
+
+      error: function(r) { this.$('.error').html(r); }
     });
 
     V.Header = V.Base.extend({ el: '<header></header>', t: _.template(t_header) });
@@ -42,6 +44,7 @@ define(
     V.Splash = V.Base.extend({
       el: '<section class="body splash"></section>',
       t: _.template(t_splash),
+      email_regex: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
 
       render: function() {
         V.Base.prototype.render.apply(this);
@@ -52,7 +55,9 @@ define(
       },
 
       events: {
-        'click [data-action=new], [data-action=old]': 'toggleSignup'
+        'click [data-action=new], [data-action=old]': 'toggleSignup',
+        'click [data-action=signup]': 'signup',
+        'click [data-action=login]': 'login'
       },
 
       toggleSignup: function() {
@@ -60,6 +65,42 @@ define(
         this.$(
           '[data-action=signup], [data-action=login], [data-action=new], [data-action=old]'
         ).toggle();
+        this.$('.error').html('');
+      },
+
+      signup: function(e) {
+        var v = this;
+        var email = v.$('[name=email]').val();
+        var password = v.$('[name=password]').val();
+        var confirm_ = v.$('[name=confirm]').val();
+
+        if (!email || !password || !confirm_)
+          return v.error('All fields are required.');
+        if (!email.match(v.email_regex))
+          return v.error('Please use a valid email address.');
+        if (password != confirm_)
+          return v.error('Passwords do not match.');
+
+        (new M.User({email: email, password: password})).save({}, {
+          success: function() {},
+          error: function(m, r) { v.error('There was a problem.'); console.log(r); }
+        });
+      },
+
+      login: function(e) {
+        var v = this;
+        var email = v.$('[name=email]').val();
+        var password = v.$('[name=password]').val();
+
+        if (!email || !password)
+          return v.error('All fields are required.');
+        if (!email.match(v.email_regex))
+          return v.error('Please use a valid email address.');
+
+        (new M.Session({email: email, password: password})).save({}, {
+          success: function() {},
+          error: function(m, r) { v.error('There was a problem.'); console.log(r); }
+        });
       }
     });
 
