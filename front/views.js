@@ -33,7 +33,7 @@ define(
       getTemplateArgs: function() { return {}; }
     });
 
-    V.Header = V.Base.extend({ t: _.template(t_header) });
+    V.Header = V.Base.extend({ el: '<header></header>', t: _.template(t_header) });
 
     return V;
   }
