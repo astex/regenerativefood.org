@@ -47,12 +47,12 @@ button.big { padding: 15px; font-size: 1.3em; }
 label { display: block; }
 
 header {
-  color: #bfff70;
+  color: #ffffff;
+  background-color: #3a6900;
+  box-shadow: 0px 3px 3px #999;
   font-size: 1.5em;
   line-height: 3em;
   vertical-align: middle;
-  max-width: 1000px;
-  margin: auto;
   padding-left: 15px;
 }
 header a, header a:active, header a:visited, header a:hover {
