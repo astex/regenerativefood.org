@@ -9,10 +9,10 @@ define(
 
     V.Main = B.View.extend({
       el: $('body'),
-      model: new M.Session(),
 
       initialize: function() {
         var v = this;
+        this.$el.html('');
         _.serial([$.proxy(v.fetch, v), $.proxy(v.render, v)])({
           success: function() { v.trigger('ready'); }
         });
@@ -88,11 +88,18 @@ define(
       getTemplateArgs: function() { return {session: this.session}; },
 
       events: {
-        'click [data-popup]': 'popup'
+        'click [data-popup]': 'popup',
+        'click [data-action=logout]': 'logout'
       },
 
       popup: function(e) {
         this.$($(e.currentTarget).data('popup')).toggleClass('expanded');
+      },
+
+      logout: function() {
+        this.session.destroy({
+          success: function() { new V.Main({model: new M.Session()}); }
+        });
       }
     });
 

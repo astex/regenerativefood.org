@@ -14,14 +14,14 @@ require.config({
 });
 
 
-require(['jquery', 'backbone', 'views', 'css!style/main.css'], function($, B, V) {
+require(['jquery', 'backbone', 'models', 'views', 'css!style/main.css'], function($, B, M, V) {
   $.ajaxSetup({
     xhrFields: { withCredentials: true }
   });
 
   new (B.Router.extend({
     routes: {'': 'main'},
-    main: function() { new V.Main({}); }
+    main: function() { new V.Main({model: new M.Session()}); }
   }))();
 
   B.history.start({pushState: true});
