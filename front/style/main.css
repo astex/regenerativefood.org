@@ -7,18 +7,6 @@ body {
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background-image: url('/img/garden.jpg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-body .cover {
-  background-color: rgba(0,0,0,0.3);
-  background-size: cover;
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  z-index: -1;
 }
 
 h1, h2, h3, h4, h5, h6 { font-weight: normal; }
@@ -74,8 +62,15 @@ header a, header a:active, header a:visited, header a:hover {
 section.body {
   height: calc(100vh - 3em);
   overflow-y: auto;
+  z-index: -2;
 }
-section.body.splash { height: 100vh; }
+section.body.splash {
+  height: 100vh;
+  background-image: url('/img/garden.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 
 .error {
   transition: opacity .1s ease-in-out;
