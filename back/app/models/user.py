@@ -5,7 +5,7 @@ from app.models import ModelMixin
 
 
 class User(ModelMixin, db.Model):
-    name = db.Column(
+    email = db.Column(
         db.Unicode(length=255), nullable=False, unique=True, index=True
     )
     _password = db.Column('password', db.Unicode(length=255), nullable=False)
@@ -22,4 +22,4 @@ class User(ModelMixin, db.Model):
             self.password
 
     def get_dictionary(self):
-        return {'id_': self.id_, 'name': self.name}
+        return {'id_': self.id_, 'email': self.email}

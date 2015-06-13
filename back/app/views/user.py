@@ -17,7 +17,7 @@ class SessionView(View):
 
     def post(self):
         user = db.session.query(User).filter(
-            User.name == request.json.get('name')
+            User.email == request.json.get('email')
         ).first()
 
         if not user:
