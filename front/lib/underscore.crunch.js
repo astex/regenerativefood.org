@@ -1,0 +1,8 @@
+/*
+    Underscore crunch
+    Extention to underscore for handling callbacks
+    (c) 2014-2015 Ashwin Hamal, FoodtoEat
+
+    Underscore Plus may be freely distributed under the MIT license
+*/
+(function(r,n){"function"==typeof define&&define.amd?define(["underscore"],n):"object"==typeof exports?module.exports=n(require("underscore")):n(r._)})(this,function(r){var n=r.succeed=function(n,e){n&&r.isFunction(n.success)&&n.success(e)},e=r.complete=function(n,e){n&&r.isFunction(n.complete)&&n.complete(e)};r.error=function(n,e){n&&r.isFunction(n.error)&&n.error(e)},r.finish=function(r){e(r),n(r)},r.parallel=function(n){return function(e){if(!r.isArray(n))throw Error("Invalid structure for _.parallel");if(r.isEmpty(n))return r.finish(e);var t={success:r.after(n.length,e.success||function(){}),error:r.once(e.error||function(){}),complete:r.after(n.length,e.complete||function(){})};return r.map(n,function(r){return r(t)})}},r.serial=function(n,e){if(!r.isArray(n))throw Error("Invalid structure for _.serial");return function(t){var o=[];if(r.isEmpty(n))return r.finish(t);var c=n[0],u=r.serial(n.slice(1),e),i=r.extend({},t,{complete:r.after(2,t.complete||function(){})});return o.push(c({success:function(){r.each(u(i),function(r){o.push(r)})},error:function(){return e?r.each(u(i),function(r){o.push(r)}):r.complete(i),r.error(i,arguments)},complete:function(){r.complete(i)}})),o}};var t=r.crunch=function(n,e){return function(o){if(r.isFunction(n))return n(o);if(r.isArray(n))return r.parallel(r.map(n,function(r){return t(r,e)}))(o);if(n&&n.pre&&n.post){var c={};return r.serial([function(r){c.pre=t(n.pre,e)(r)},function(r){c.post=t(n.post,e)(r)}])(o),c}throw Error("Invalid structure for _.crunch")}};return r});

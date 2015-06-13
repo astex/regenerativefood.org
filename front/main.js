@@ -1,7 +1,22 @@
 require.config({
   paths: {
-    css: 'lib/require-css'
+    css: 'lib/require-css',
+    text: 'lib/require-text',
+
+    jquery: 'lib/jquery',
+
+    underscore: 'lib/underscore',
+    'underscore.crunch': 'lib/underscore.crunch',
+
+    backbone: 'lib/backbone'
   }
 });
 
-require(['css!style/main.css'], function() {});
+require(['backbone', 'views', 'css!style/main.css'], function(B, V) {
+  new (B.Router.extend({
+    routes: {'': 'main'},
+    main: function() { new V.Main({}); }
+  }));
+
+  B.history.start({pushState: true});
+});
