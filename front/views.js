@@ -41,7 +41,26 @@ define(
 
     V.Splash = V.Base.extend({
       el: '<section class="body splash"></section>',
-      t: _.template(t_splash)
+      t: _.template(t_splash),
+
+      render: function() {
+        V.Base.prototype.render.apply(this);
+        this.$('[name=confirm]').parents('label').toggle(false);
+        this.$('[data-action=signup]').toggle(false);
+        this.$('[data-action=old]').toggle(false);
+        return this;
+      },
+
+      events: {
+        'click [data-action=new], [data-action=old]': 'toggleSignup'
+      },
+
+      toggleSignup: function() {
+        this.$('[name=confirm]').parents('label').toggle();
+        this.$(
+          '[data-action=signup], [data-action=login], [data-action=new], [data-action=old]'
+        ).toggle();
+      }
     });
 
     return V;
