@@ -13,7 +13,12 @@ require.config({
   }
 });
 
-require(['backbone', 'views', 'css!style/main.css'], function(B, V) {
+
+require(['jquery', 'backbone', 'views', 'css!style/main.css'], function($, B, V) {
+  $.ajaxSetup({
+    xhrFields: { withCredentials: true }
+  });
+
   new (B.Router.extend({
     routes: {'': 'main'},
     main: function() { new V.Main({}); }
