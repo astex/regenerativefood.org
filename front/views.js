@@ -74,6 +74,8 @@ define(
         var password = v.$('[name=password]').val();
         var confirm_ = v.$('[name=confirm]').val();
 
+        v.$('.error').html('');
+
         if (!email || !password || !confirm_)
           return v.error('All fields are required.');
         if (!email.match(v.email_regex))
@@ -91,6 +93,8 @@ define(
         var v = this;
         var email = v.$('[name=email]').val();
         var password = v.$('[name=password]').val();
+
+        v.$('.error').html('');
 
         if (!email || !password)
           return v.error('All fields are required.');
