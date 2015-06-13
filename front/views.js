@@ -18,25 +18,33 @@ define(
         });
       },
 
+      fetch: function(cbs) {
+        var v = this;
+        _.serial([$.proxy(v.model.fetch, v.model), $.proxy(v.model.fetchUser, v.model)])(cbs);
+      },
+
       render: function(cbs) {
         var v = this;
         _.parallel([
           function(cbs_) {
             if (!v.model.get('user_id'))
               return _.finish(cbs_);
-            v.$el.append((new V.Header()).on('ready', function() { _.finish(cbs_); }).el);
+            v.add(V.Header, cbs_);
           },
           function(cbs_) {
             if (v.model.get('user_id'))
               return _.finish(cbs_);
-            v.$el.append((new V.Splash()).on('ready', function() { _.finish(cbs_); }).el);
+            v.add(V.Splash, cbs_);
           }
         ])(cbs);
       },
 
-      fetch: function(cbs) {
-        var v = this;
-        _.serial([$.proxy(v.model.fetch, v.model), $.proxy(v.model.fetchUser, v.model)])(cbs);
+      add: function(View, cbs) {
+        this.$el.append(
+          (new View({session: this.model}))
+            .on('ready', function() { _.finish(cbs); })
+            .el
+        );
       }
     });
 
