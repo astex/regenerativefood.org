@@ -198,7 +198,8 @@ define(
       fetch: function(cbs) {
         var v = this;
         _.serial([
-          $.proxy(this.model.fetch, this.model),
+          $.proxy(v.model.fetch, v.model),
+          $.proxy(v.model.fetchOwners, v.model),
           function(cbs_) {
             _.parallel(
               v.model.map(function(entry) { return $.proxy(entry.fetchSrc, entry); })
