@@ -49,7 +49,8 @@ button:hover, .button:hover, button.active, .button.active {
   background: rgba(0, 0, 0, 0.2);
 }
 button.raised, .button.raised { box-shadow: 3px 3px 3px #999; }
-button.blue, .button.blue, button.orange, .button.orange, button.red, .button.red {
+button.blue, .button.blue, button.orange, .button.orange, button.red, .button.red,
+button.white, .button.white, button.green, .button.green {
   transition: background-color .1s ease-in-out;
 }
 button.blue, .button.blue {
@@ -72,6 +73,17 @@ button.red, .button.red {
 }
 button.red:hover, .button.red:hover, button.red.active, .button.red.active {
   background-color: #aa0000;
+}
+button.white, .button.white { background-color: #ffffff; }
+button.white:hover, .button.white:hover, button.white.active, .button.white.active {
+  background-color: #dddddd;
+}
+button.green, .button.green {
+  background-color: #3a6900;
+  color: #ffffff;
+}
+button.green:hover, .button.green:hover, button.green.active, .button.green.active {
+  background-color: #305800;
 }
 button.big, .button.big { padding: 15px; font-size: 1.3em; }
 button.medium, .button.medium { margin-right: 15px; padding: 5px 10px; font-size: 1.1em; }
