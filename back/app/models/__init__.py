@@ -28,7 +28,7 @@ class ModelMixin(object):
 
     def update(self, d):
         for column in self.__table__.columns:
-            if column.key == 'id_':
+            if column.key == 'id':
                 continue
             setattr(
                 self, column.key, d.get(
