@@ -6,7 +6,7 @@ define(
     'text!templates/list.utpl',
     'text!templates/entry.utpl',
     'text!templates/month.utpl',
-    'underscore.crunch'
+    'underscore.crunch', 'jquery.deparam'
   ], function($, _, B, moment, M, t_splash, t_header, t_list, t_entry, t_month) {
     var V = {};
 
@@ -43,7 +43,12 @@ define(
           function(cbs_) { v.add(V.Header, cbs); },
           function(cbs_) {
             v.$el.append(
-              (new V.List({session: v.model, model: new M.Entries()}))
+              (new V.List({
+                session: v.model,
+                model: ((new M.Entries()).setFilters(
+                  $.deparam(window.location.search.slice(1))
+                ))
+              }))
                 .on('ready', function() { _.finish(cbs); })
                 .el
             );

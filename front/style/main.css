@@ -36,7 +36,7 @@ a {
 a:active, a:visited { color: #aa6a00; }
 a:hover { color: #ffc970; }
 
-button {
+button, a.button {
   transition: background 0.1s ease-in-out;
   background: inherit;
   color: inherit;
@@ -45,33 +45,41 @@ button {
   border: none;
   outline: none;
 }
-button:hover, button.active { background: rgba(0, 0, 0, 0.2); }
-button.raised { box-shadow: 3px 3px 3px #999; }
-button.blue {
+button:hover, .button:hover, button.active, .button.active {
+  background: rgba(0, 0, 0, 0.2);
+}
+button.raised, .button.raised { box-shadow: 3px 3px 3px #999; }
+button.blue, .button.blue {
   transition: background-color .1s ease-in-out;
   background-color: #4520ff;
   color: #ffffff;
 }
-button.blue:hover, button.blue.active { background-color: #3510dd; }
-button.orange {
+button.blue:hover, .button.hover, button.blue.active .button.blue.active {
+  background-color: #3510dd;
+}
+button.orange, .button.orange {
   transition: background-color .1s ease-in-out;
   background-color: #ff9f00;
   color: #ffffff;
 }
-button.orange:hover, button.orange.active { background-color: #aa6a00; }
-button.big { padding: 15px; font-size: 1.3em; }
-button.medium { margin-right: 15px; padding: 5px 10px; font-size: 1.1em; }
-button.action {
+button.orange:hover, .button.orange:hover, button.orange.active, .button.orange.active {
+  background-color: #aa6a00;
+}
+button.big, .button.big { padding: 15px; font-size: 1.3em; }
+button.medium, .button.medium { margin-right: 15px; padding: 5px 10px; font-size: 1.1em; }
+button.action, .button.action {
   padding: 15px;
   transition: background-color .1s ease-in-out, box-shadow .1s ease-in-out;
   box-shadow: 0px 0px 3px #999;
   border-radius: 500px;
 }
-button.action.big {
+button.action.big, .button.action.big {
   padding: 20px;
   font-size: 1.5em;
 }
-button.action:hover, button.action.active { box-shadow: 0px 3px 5px #666; }
+button.action:hover, .button.action:hover, button.action.active, .button.action.active {
+  box-shadow: 0px 3px 5px #666;
+}
 
 label { display: block; }
 
@@ -87,7 +95,7 @@ header {
 header a, header a:active, header a:visited, header a:hover {
   color: inherit;
 }
-header button {
+header button, header .button {
   line-height: inherit;
   padding: 0px 15px;
 }
@@ -126,7 +134,7 @@ section.body > h1 {
   transition: max-height .2s ease-in-out;
   box-shadow: 0px 0px 5px #666;
 }
-.popup.expanded { max-height: 100px; }
+.popup.expanded { max-height: 150px; }
 .popup.medium { width: 200px; }
 
 .popup.user {
@@ -134,11 +142,12 @@ section.body > h1 {
   right: 0px;
 }
 
-.menu button {
+.menu button, .menu .button {
   display: block;
   width: 100%;
   text-align: right;
 }
+.menu .button { width: initial; }
 
 .right { float: right; }
 
