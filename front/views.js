@@ -276,13 +276,18 @@ define(
 
       events: {
         'click .title': 'toggle',
+        'change input': 'set',
+        'change textarea': 'set',
         'click [data-action=cancel]': 'cancel',
-        'change input': 'set'
+        'click [data-action=publish]': 'publish'
       },
 
       toggle: function() { if (!this.edit) this.$el.toggleClass('expanded'); },
 
-      set: function(e) {},
+      set: function(e) {
+        var $el = $(e.currentTarget);
+        this.model.set($el.attr('name'), $el.val());
+      },
 
       cancel: function() {
         if (this.model.isNew())
@@ -291,6 +296,22 @@ define(
         this.edit = false;
         this.$el.removeClass('editing');
         this.render();
+      },
+
+      publish: function() {
+        var v = this;
+
+        v.$('.error').html('');
+
+        if (!v.model.get('title'))
+          return v.error('Please give your post a title.');
+        if (!v.model.get('src'))
+          return v.error('Please add some content.');
+
+        v.model.save({}, {
+          error: function() { v.error('We could not save that entry.'); },
+          success: function() { v.cancel(); }
+        });
       }
     });
 

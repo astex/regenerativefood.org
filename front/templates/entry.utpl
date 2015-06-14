@@ -7,7 +7,11 @@
   <div class="content"><%= model.get('content') %></div>
 <% } else { %>
   <div class="title">
-    <input name="title" placeholder="Title">
+    <input
+      name="title"
+      placeholder="Title"
+      <% if (model.get('title')) { %>value="<%- model.get('title') %>"<% } %>
+      >
     <small><%- moment(model.get('created')).format('L LT') %></small>
     <small class="blue"><%- model.owner.get('name') %></small>
   </div>
@@ -15,7 +19,7 @@
     <textarea name="src" placeholder="Type your post here."><%= model.get('src') %></textarea>
   </div>
   <input name="tags" placeholder="Tags">
-  <button class="medium right raised blue" data-action="publish">Save</button>
+  <button class="medium right raised blue" data-action="publish">Publish</button>
   <button class="medium right raised" data-action="cancel">Cancel</button>
   <div class="error"></div>
   <div class="clear"></div>
