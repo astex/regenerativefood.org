@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'regenerativefood';
-  src: url('../font/regenerativefood.eot?17282071');
-  src: url('../font/regenerativefood.eot?17282071#iefix') format('embedded-opentype'),
-       url('../font/regenerativefood.woff?17282071') format('woff'),
-       url('../font/regenerativefood.ttf?17282071') format('truetype'),
-       url('../font/regenerativefood.svg?17282071#regenerativefood') format('svg');
+  src: url('../font/regenerativefood.eot?87779197');
+  src: url('../font/regenerativefood.eot?87779197#iefix') format('embedded-opentype'),
+       url('../font/regenerativefood.woff?87779197') format('woff'),
+       url('../font/regenerativefood.ttf?87779197') format('truetype'),
+       url('../font/regenerativefood.svg?87779197#regenerativefood') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'regenerativefood';
-    src: url('../font/regenerativefood.svg?17282071#regenerativefood') format('svg');
+    src: url('../font/regenerativefood.svg?87779197#regenerativefood') format('svg');
   }
 }
 */
@@ -55,3 +55,4 @@
 }
  
 .icon-pencil:before { content: '\e800'; } /* '' */
+.icon-trash:before { content: '\e801'; } /* '' */
