@@ -5,6 +5,7 @@ require.config({
     json: 'lib/require-json',
 
     jquery: 'lib/jquery',
+    'jquery.deparam': 'lib/jquery.deparam',
 
     underscore: 'lib/underscore',
     'underscore.crunch': 'lib/underscore.crunch',
