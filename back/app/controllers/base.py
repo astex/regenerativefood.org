@@ -22,7 +22,7 @@ class RestController(object):
         return model
 
     def post(self, data):
-        model = self.Model(**request.json)
+        model = self.Model(**data)
         db.session.add(model)
         self.commit()
         return model
