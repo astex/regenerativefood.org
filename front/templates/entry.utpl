@@ -7,6 +7,9 @@
   <div class="content"><%= model.get('content') %></div>
   <% if (session.user.get('is_admin') || session.get('user_id') == model.get('owner_id')) { %>
     <div class="buttons">
+      <button class="red action medium" data-action="delete">
+        <i class="icon icon-trash"></i>
+      </button>
       <button class="orange action medium" data-action="edit">
         <i class="icon icon-pencil"></i>
       </button>

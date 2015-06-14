@@ -49,8 +49,10 @@ button:hover, .button:hover, button.active, .button.active {
   background: rgba(0, 0, 0, 0.2);
 }
 button.raised, .button.raised { box-shadow: 3px 3px 3px #999; }
-button.blue, .button.blue {
+button.blue, .button.blue, button.orange, .button.orange, button.red, .button.red {
   transition: background-color .1s ease-in-out;
+}
+button.blue, .button.blue {
   background-color: #4520ff;
   color: #ffffff;
 }
@@ -58,12 +60,18 @@ button.blue:hover, .button.hover, button.blue.active .button.blue.active {
   background-color: #3510dd;
 }
 button.orange, .button.orange {
-  transition: background-color .1s ease-in-out;
   background-color: #ff9f00;
   color: #ffffff;
 }
 button.orange:hover, .button.orange:hover, button.orange.active, .button.orange.active {
   background-color: #aa6a00;
+}
+button.red, .button.red {
+  background-color: #ff0000;
+  color: #ffffff;
+}
+button.red:hover, .button.red:hover, button.red.active, .button.red.active {
+  background-color: #aa0000;
 }
 button.big, .button.big { padding: 15px; font-size: 1.3em; }
 button.medium, .button.medium { margin-right: 15px; padding: 5px 10px; font-size: 1.1em; }

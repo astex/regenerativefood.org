@@ -290,6 +290,7 @@ define(
         'change textarea': 'set',
         'click [data-action=cancel]': 'cancel',
         'click [data-action=publish]': 'publish',
+        'click [data-action=delete]': 'destroy',
         'click [data-action=edit]': 'edit'
       },
 
@@ -306,7 +307,6 @@ define(
 
         this.edit = false;
         this.$el.removeClass('editing');
-        this.$el.removeClass('expanded');
         this.render();
       },
 
@@ -328,6 +328,14 @@ define(
               success: function() { v.cancel(); }
             });
           }
+        });
+      },
+
+      destroy: function() {
+        var v = this;
+        v.model.destroy({
+          success: function() { v.remove(); },
+          error: function() { v.error('We couldn\'t delete that entry.'); }
         });
       },
 
