@@ -22,5 +22,12 @@ class User(ModelMixin, db.Model):
         return bcrypt.hashpw(val.encode('utf-8'), self.password) == \
             self.password
 
-    def get_dictionary(self):
-        return {'id': self.id_, 'name': self.name, 'email': self.email}
+    def get_dictionary(self, verbosity):
+        d = {'id': self.id_, 'name': self.name}
+
+        if verbosity not in ['admin', 'self']:
+            return d
+
+        d.update({'email': self.email})
+
+        return d

@@ -1,5 +1,5 @@
 from flask import request, session
-from werkzeug.exceptions import Unauthorized
+from werkzeug.exceptions import Unauthorized, BadRequest
 from app.lib.database import db
 from app.controllers.user import UserController
 from app.views.base import View, RestView
@@ -9,6 +9,14 @@ from app.models.user import User
 class UserView(RestView):
     def get_controller(self):
         return UserController()
+
+    def parse(self, model):
+        try:
+            verbosity = request.args['verbosity']
+        except KeyError:
+            raise BadRequest('Please pass a verbosity.')
+
+        return model.get_dictionary(verbosity)
 
 
 class SessionView(View):

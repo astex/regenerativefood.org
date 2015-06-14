@@ -23,6 +23,7 @@ define(
 
       fetch: function(cbs) {
         var v = this;
+        v.model.user = ((new M.User()).setFilters({verbosity: 'self'}));
         _.serial([
           function(cbs_) {
             if (v.model.get('user_id'))
@@ -198,6 +199,9 @@ define(
 
       fetch: function(cbs) {
         var v = this;
+
+        v.model.owners = ((new M.Users()).setFilters({'verbosity': 'guest'}));
+
         _.serial([
           $.proxy(v.model.fetch, v.model),
           $.proxy(v.model.fetchOwners, v.model)
