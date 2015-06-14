@@ -3,6 +3,7 @@ from werkzeug.exceptions import Unauthorized
 from app.lib.database import db
 from app.controllers.user import UserController
 from app.views.base import View, RestView
+from app.models.user import User
 
 
 class UserView(RestView):
