@@ -1,9 +1,12 @@
+import six
 from werkzeug.exceptions import NotFound
 from app.lib.database import db
 
 
 class RestController(object):
     Model = None
+
+    filters = {}
 
     def commit(self):
         try:
@@ -12,8 +15,16 @@ class RestController(object):
             db.session.rollback()
             raise e
 
+    def filter_(self, q, filter_data):
+        for k, f in six.iteritems(self.filters):
+            if k in filter_data:
+                q = q.filter(f(filter_data))
+        return q
+
     def index(self, filter_data):
-        return db.session.query(self.Model).all()
+        q = db.session.query(self.Model)
+        q = self.filter_(q, filter_data)
+        return q.all()
 
     def get(self, id_, filter_data=None):
         if filter_data == None:
