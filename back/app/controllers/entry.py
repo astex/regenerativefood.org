@@ -10,7 +10,7 @@ class EntryController(RestController):
         'owner_id': lambda d: Entry.owner_id == d.get('owner_id')
     }
 
-    def post(self, data):
+    def post(self, data, filter_data):
         data = data.copy()
 
         slug = data.get('slug')
@@ -21,4 +21,4 @@ class EntryController(RestController):
             slug = slug + uuid.uuid4()
         data['slug'] = slug
 
-        return super(EntryController, self).post(data)
+        return super(EntryController, self).post(data, filter_data)
