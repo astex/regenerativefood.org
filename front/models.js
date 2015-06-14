@@ -54,6 +54,7 @@ define([
     }, {base_url: config.url + '/session/'});
 
     M.Entry = M.Model.extend({
+      defaults: {parser: 'marked'},
       fetchSrc: function(cbs) {
         var m = this;
         return require([m.get('parser')], function(parse) {
