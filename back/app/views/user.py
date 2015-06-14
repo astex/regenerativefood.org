@@ -1,12 +1,13 @@
 from flask import request, session
 from werkzeug.exceptions import Unauthorized
 from app.lib.database import db
-from app.models.user import User
+from app.controllers.user import UserController
 from app.views.base import View, RestView
 
 
 class UserView(RestView):
-    Model = User
+    def get_controller(self):
+        return UserController()
 
 
 class SessionView(View):

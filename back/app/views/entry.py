@@ -1,6 +1,7 @@
-from app.models.entry import Entry
 from app.views.base import RestView
+from app.controllers.entry import EntryController
 
 
 class EntryView(RestView):
-    Model = Entry
+    def get_controller(self):
+        return EntryController()

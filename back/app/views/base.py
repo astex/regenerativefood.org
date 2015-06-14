@@ -8,40 +8,29 @@ class View(FlaskView):
     def json(self, obj, status=200):
         return jsonify(data=obj), status
 
+    def parse(self, model):
+        return model.get_dictionary()
+
 
 class RestView(View):
-    Model = None
+    def get_controller(self):
+        pass
 
     def index(self):
-        return self.json([
-            m.get_dictionary() for m in db.session.query(self.Model).all()
-        ])
+        return self.json([self.parse(m) for m in self.get_controller().index()])
 
     def get(self, id_):
-        model = db.session.query(self.Model).filter(self.Model.id_==id_).first()
-        if not model:
-            raise NotFound
-        return self.json(model.get_dictionary())
+        return self.json(self.parse(self.get_controller().get(id_)))
 
     def post(self):
-        model = self.Model(**request.json)
-        db.session.add(model)
-        db.session.commit()
-        return self.json(model.get_dictionary(), 201)
+        return self.json(self.parse(
+            self.get_controller().post(request.json)
+        ), 201)
 
     def put(self, id_):
-        model = db.session.query(self.Model).filter(self.Model.id_==id_).first()
-        if not model:
-            raise NotFound
-        model.update(request.json)
-        db.session.add(model)
-        db.session.commit()
-        return self.json(model.get_dictionary())
+        return self.json(self.parse(
+            self.get_controller().put(id_, request.json)
+        ))
 
     def delete(self, id_):
-        model = db.session.query(self.Model).filter(self.Model.id_==id_).first()
-        if not model:
-            raise NotFound
-        db.session.delete(model)
-        db.session.commit()
-        return self.json({}, 204)
+        return self.json(self.get_controller().delete(id_), 204)
