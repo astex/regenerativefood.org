@@ -18,4 +18,4 @@ class EntryController(RestController):
             slug = slug + uuid.uuid4()
         data['slug'] = slug
 
-        super(EntryController, self).post(data)
+        return super(EntryController, self).post(data)
