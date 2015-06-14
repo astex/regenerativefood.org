@@ -234,7 +234,7 @@ define(
       },
 
       new_: function() {
-        var entry = new M.Entry({owner_id: this.session.get('owner_id')});
+        var entry = new M.Entry({owner_id: this.session.get('user_id')});
         entry.owner = this.session.user;
 
         var entry_view = (new V.Entry({session: this.session, edit: true, model: entry}));
