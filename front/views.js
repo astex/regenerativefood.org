@@ -276,12 +276,22 @@ define(
 
       events: {
         'click .title': 'toggle',
+        'click [data-action=cancel]': 'cancel',
         'change input': 'set'
       },
 
       toggle: function() { if (!this.edit) this.$el.toggleClass('expanded'); },
 
-      set: function(e) {}
+      set: function(e) {},
+
+      cancel: function() {
+        if (this.model.isNew())
+          return this.remove();
+
+        this.edit = false;
+        this.$el.removeClass('editing');
+        this.render();
+      }
     });
 
     return V;

@@ -16,6 +16,7 @@
   </div>
   <input name="tags" placeholder="Tags">
   <button class="medium right raised blue" data-action="publish">Save</button>
+  <button class="medium right raised" data-action="cancel">Cancel</button>
   <div class="error"></div>
   <div class="clear"></div>
 <% } %>
