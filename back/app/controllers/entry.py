@@ -6,6 +6,9 @@ from app.models.entry import Entry
 
 class EntryController(RestController):
     Model = Entry
+    filters = {
+        'owner_id': lambda d: Entry.owner_id == d.get('owner_id')
+    }
 
     def post(self, data):
         data = data.copy()
