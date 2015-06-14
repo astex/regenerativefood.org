@@ -12,7 +12,7 @@ define([
         },
 
         setFilters: function(filters) {
-          _.extend(this.filters, filters);
+          this.filters = _.extend({}, this.filters, filters);
           return this;
         },
 
@@ -43,7 +43,7 @@ define([
         },
 
         setFilters: function(filters) {
-          _.extend(this.filters, filters);
+          this.filters = _.extend({}, this.filters, filters);
           return this;
         },
 
