@@ -26,6 +26,7 @@ small {
   font-size: .9em;
   color: #559b00;
 }
+small.blue { color: #9782ff; }
 
 a {
   color: #aa6a00;
@@ -58,6 +59,7 @@ button.orange {
 }
 button.orange:hover, button.orange.active { background-color: #aa6a00; }
 button.big { padding: 15px; font-size: 1.3em; }
+button.medium { padding: 5px 10px; font-size: 1.1em; }
 button.action {
   padding: 15px;
   transition: background-color .1s ease-in-out, box-shadow .1s ease-in-out;
@@ -189,10 +191,31 @@ section.body > h1 {
   margin: 15px auto;
 }
 
-.entry .content { display: none; }
+.entry .content {
+  font-size: 1.2em;
+  display: none;
+  margin-top: 15px;
+}
 .entry.expanded .content { display: block; }
 
 .entry .title {
   font-size: 1.3em;
   cursor: pointer;
 }
+.entry.editing .title {
+  cursor: default;
+}
+
+.entry input, .entry textarea {
+  font-family: inherit;
+  font-size: inherit;
+  padding: 3px 5px;
+}
+.entry [name=src] {
+  width: calc(100% - 13px);
+  min-height: 400px;
+}
+.entry [name=tags] { width: calc(100% - 50px - 25px); }
+.entry [data-action=publish] { width: 50px; }
+
+.clear { clear: both; }

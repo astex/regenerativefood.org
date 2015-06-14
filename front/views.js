@@ -259,15 +259,29 @@ define(
         this.model.fetchSrc(cbs);
       },
 
+      render: function() {
+        V.Base.prototype.render.apply(this);
+        if (this.edit) {
+          this.$el.addClass('expanded');
+          this.$el.addClass('editing');
+        }
+        return this;
+      },
+
       getTemplateArgs: function() {
         return {
           model: this.model, session: this.session, edit: this.edit, moment: moment
         };
       },
 
-      events: {'click .title': 'toggle'},
+      events: {
+        'click .title': 'toggle',
+        'change input': 'set'
+      },
 
-      toggle: function() { this.$el.toggleClass('expanded'); }
+      toggle: function() { if (!this.edit) this.$el.toggleClass('expanded'); },
+
+      set: function(e) {}
     });
 
     return V;
