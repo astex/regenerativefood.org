@@ -1,3 +1,4 @@
+import uuid
 from app.lib.database import db
 from app.controllers.base import RestController
 from app.models.entry import Entry
