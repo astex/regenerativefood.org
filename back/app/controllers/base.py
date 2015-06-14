@@ -12,29 +12,32 @@ class RestController(object):
             db.session.rollback()
             raise e
 
-    def index(self):
+    def index(self, filter_data):
         return db.session.query(self.Model).all()
 
-    def get(self, id_):
+    def get(self, id_, filter_data=None):
+        if filter_data == None:
+            filter_data = {}
+
         model = db.session.query(self.Model).filter(self.Model.id_==id_).first()
         if not model:
             raise NotFound
         return model
 
-    def post(self, data):
+    def post(self, data, filter_data):
         model = self.Model(**data)
         db.session.add(model)
         self.commit()
         return model
 
-    def put(self, id_, data):
+    def put(self, id_, data, filter_data):
         model = self.get(id_)
         model.update(data)
         db.session.add(model)
         self.commit()
         return model
 
-    def delete(self, id_):
+    def delete(self, id_, filter_data):
         model = self.get(id_)
         db.session.delete(model)
         self.commit()
