@@ -11,6 +11,8 @@ class User(ModelMixin, db.Model):
     )
     _password = db.Column('password', db.Unicode(length=255), nullable=False)
 
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+
     @property
     def password(self):
         return self._password
@@ -28,6 +30,6 @@ class User(ModelMixin, db.Model):
         if verbosity not in ['admin', 'self']:
             return d
 
-        d.update({'email': self.email})
+        d.update({'is_admin': self.is_admin, 'email': self.email})
 
         return d
