@@ -5,6 +5,13 @@
     <small class="orange"><%- model.owner.get('name') %></small>
   </div>
   <div class="content"><%= model.get('content') %></div>
+  <% if (session.user.get('is_admin') || session.get('user_id') == model.get('owner_id')) { %>
+    <div class="buttons">
+      <button class="orange action medium" data-action="edit">
+        <i class="icon icon-pencil"></i>
+      </button>
+    </div>
+  <% } %>
 <% } else { %>
   <div class="title">
     <input
@@ -18,9 +25,9 @@
   <div class="content">
     <textarea name="src" placeholder="Type your post here."><%= model.get('src') %></textarea>
   </div>
-  <input name="tags" placeholder="Tags">
   <button class="medium right raised blue" data-action="publish">Publish</button>
   <button class="medium right raised" data-action="cancel">Cancel</button>
+  <input name="tags" placeholder="Tags">
   <div class="error"></div>
   <div class="clear"></div>
 <% } %>

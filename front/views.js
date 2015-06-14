@@ -289,7 +289,8 @@ define(
         'change input': 'set',
         'change textarea': 'set',
         'click [data-action=cancel]': 'cancel',
-        'click [data-action=publish]': 'publish'
+        'click [data-action=publish]': 'publish',
+        'click [data-action=edit]': 'edit'
       },
 
       toggle: function() { if (!this.edit) this.$el.toggleClass('expanded'); },
@@ -328,6 +329,11 @@ define(
             });
           }
         });
+      },
+
+      edit: function() {
+        this.edit = true;
+        this.render();
       }
     });
 
