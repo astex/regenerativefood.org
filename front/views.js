@@ -99,9 +99,8 @@ define(
 
       render: function() {
         V.Base.prototype.render.apply(this);
-        this.$('[name=confirm]').parents('label').toggle(false);
-        this.$('[data-action=signup]').toggle(false);
-        this.$('[data-action=old]').toggle(false);
+        this.$('[name=confirm], [name=name]').parents('label').toggle(false);
+        this.$('[data-action=signup], [data-action=old]').toggle(false);
         return this;
       },
 
@@ -112,7 +111,7 @@ define(
       },
 
       toggleSignup: function() {
-        this.$('[name=confirm]').parents('label').toggle();
+        this.$('[name=confirm], [name=name]').parents('label').toggle();
         this.$(
           '[data-action=signup], [data-action=login], [data-action=new], [data-action=old]'
         ).toggle();
@@ -121,27 +120,29 @@ define(
 
       signup: function(e) {
         var v = this;
+        var name = v.$('[name=name]').val();
         var email = v.$('[name=email]').val();
         var password = v.$('[name=password]').val();
         var confirm_ = v.$('[name=confirm]').val();
 
         v.$('.error').html('');
 
-        if (!email || !password || !confirm_)
+        if (!name || !email || !password || !confirm_)
           return v.error('All fields are required.');
         if (!email.match(v.email_regex))
           return v.error('Please use a valid email address.');
         if (password != confirm_)
           return v.error('Passwords do not match.');
 
-        data = {email: email, password: password};
+        data = {name: name, email: email, password: password};
 
         (new M.User(data)).save({}, {
           success: function() {
             (new M.Session(data)).save({}, {
               success: function(m) { (new V.Main({model: m})); },
               error: function() { v.error(
-                'A user account was created, but we had trouble logging you in.  Try logging in normally.'
+                'A user account was created, but we had trouble logging you in.  Try logging in ' +
+                'normally.'
               ); }
             });
           },
