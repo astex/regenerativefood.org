@@ -323,6 +323,7 @@ define(
         v.model.save({}, {
           error: function() { v.error('We could not save that entry.'); },
           success: function() {
+            v.$el.removeClass('expanded');
             v.model.fetchSrc({
               error: function() { v.error('Your post is saved, but we had difficulty parsing it.'); },
               success: function() { v.cancel(); }
