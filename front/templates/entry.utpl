@@ -2,7 +2,7 @@
   <div class="title">
     <%- model.get('title') %>
     <small><%- moment(model.get('created')).format('L LT') %></small>
-    <small class="owner"><%- model.owner.get('name') %></small>
+    <small class="orange"><%- model.owner.get('name') %></small>
   </div>
   <div class="content"><%= model.get('content') %></div>
 <% } else { %>
@@ -13,7 +13,7 @@
       <% if (model.get('title')) { %>value="<%- model.get('title') %>"<% } %>
       >
     <small><%- moment(model.get('created')).format('L LT') %></small>
-    <small class="blue"><%- model.owner.get('name') %></small>
+    <small class="orange"><%- model.owner.get('name') %></small>
   </div>
   <div class="content">
     <textarea name="src" placeholder="Type your post here."><%= model.get('src') %></textarea>
