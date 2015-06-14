@@ -28,9 +28,14 @@
   <div class="content">
     <textarea name="src" placeholder="Type your post here."><%= model.get('src') %></textarea>
   </div>
-  <button class="medium right raised blue" data-action="publish">Publish</button>
-  <button class="medium right raised" data-action="cancel">Cancel</button>
   <input name="tags" placeholder="Tags">
   <div class="error"></div>
-  <div class="clear"></div>
+  <div class="buttons">
+    <button class="white action medium" data-action="cancel">
+      <i class="icon icon-cancel"></i>
+    </button>
+    <button class="green action medium" data-action="publish">
+      <i class="icon icon-ok"></i>
+    </button>
+  </div>
 <% } %>
