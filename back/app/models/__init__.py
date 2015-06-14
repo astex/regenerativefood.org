@@ -1,3 +1,4 @@
+from dateutil.parser import parse
 from sqlalchemy.ext.declarative import declared_attr
 from app.lib.database import db
 
@@ -30,8 +31,14 @@ class ModelMixin(object):
         for column in self.__table__.columns:
             if column.key == 'id':
                 continue
-            setattr(
-                self, column.key, d.get(
-                    column.key, getattr(self, column.key)
+
+            if isinstance(column.type, db.DateTime):
+                value = (
+                    parse(d.get(column.key)) if
+                    column.key in d else
+                    getattr(self, column.key)
                 )
-            )
+            else:
+                value = d.get(column.key, getattr(self, column.key))
+
+            setattr(self, column.key, value)
