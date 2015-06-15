@@ -267,6 +267,12 @@ define(
 
       fetch: function(cbs) {
         var v = this;
+        if (v.model.isNew()) {
+          v.model.comments = (new M.Entries()).setFilters({parent_id: v.model.get('id')});
+          v.model.comments.owners = new M.Users();
+          return _.finish(cbs);
+        }
+
         return _.parallel([
           $.proxy(v.model.fetchSrc, v.model),
           _.serial([
