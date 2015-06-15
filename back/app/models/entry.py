@@ -13,3 +13,4 @@ class Entry(ModelMixin, db.Model):
     owner_id = db.Column(
         db.Integer, db.ForeignKey('user.id'), nullable=False
     )
+    parent_id = db.Column(db.Integer, db.ForeignKey('entry.id'))

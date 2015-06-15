@@ -7,7 +7,13 @@ from app.models.entry import Entry
 class EntryController(RestController):
     Model = Entry
     filters = {
-        'owner_id': lambda d: Entry.owner_id == d.get('owner_id')
+        'owner_id': lambda d: Entry.owner_id == d.get('owner_id'),
+        'parent_id': lambda d: Entry.parent_id == d.get('parent_id'),
+        'parent_id__null': lambda d: (
+            (Entry.parent_id == None)
+            if d.get('parent_id__null')
+            else (Entry.parent_id != None)
+        )
     }
 
     def post(self, data, filter_data):
