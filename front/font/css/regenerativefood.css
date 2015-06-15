@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'regenerativefood';
-  src: url('../font/regenerativefood.eot?90775313');
-  src: url('../font/regenerativefood.eot?90775313#iefix') format('embedded-opentype'),
-       url('../font/regenerativefood.woff?90775313') format('woff'),
-       url('../font/regenerativefood.ttf?90775313') format('truetype'),
-       url('../font/regenerativefood.svg?90775313#regenerativefood') format('svg');
+  src: url('../font/regenerativefood.eot?42196300');
+  src: url('../font/regenerativefood.eot?42196300#iefix') format('embedded-opentype'),
+       url('../font/regenerativefood.woff?42196300') format('woff'),
+       url('../font/regenerativefood.ttf?42196300') format('truetype'),
+       url('../font/regenerativefood.svg?42196300#regenerativefood') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,7 +14,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'regenerativefood';
-    src: url('../font/regenerativefood.svg?90775313#regenerativefood') format('svg');
+    src: url('../font/regenerativefood.svg?42196300#regenerativefood') format('svg');
   }
 }
 */
@@ -58,3 +58,4 @@
 .icon-trash:before { content: '\e801'; } /* '' */
 .icon-cancel:before { content: '\e802'; } /* '' */
 .icon-ok:before { content: '\e803'; } /* '' */
+.icon-comment:before { content: '\e804'; } /* '' */
