@@ -380,7 +380,7 @@ define(
         v.$('.error').html('');
 
         if (!src)
-          v.error('Please add some content.');
+          return v.error('Please add some content.');
 
         var entry = new M.Entry({
           parent_id: v.model.get('id'),
