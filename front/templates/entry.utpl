@@ -13,7 +13,7 @@
   </div>
   <div class="buttons">
     <button class="blue action medium" data-show="comments">
-      <i class="icon icon-comment"></i>
+      <i class="icon icon-comment"></i> <%- model.comments.length %>
     </button>
     <% if (session.user.get('is_admin') || session.get('user_id') == model.get('owner_id')) { %>
       <button class="red action medium" data-action="delete">
