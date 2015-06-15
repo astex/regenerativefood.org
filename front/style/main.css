@@ -143,6 +143,7 @@ section.body > h1 {
   position: absolute;
   bottom: 15px;
   right: 15px;
+  z-index: 2;
 }
 
 .popup {
