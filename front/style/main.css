@@ -235,6 +235,7 @@ section.body > h1 {
   right: -26px;
   bottom: -15px;
   display: none;
+  z-index: 1;
 }
 .entry.expanded .buttons { display: block; }
 
