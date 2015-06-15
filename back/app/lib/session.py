@@ -6,7 +6,7 @@ class Session(SecureCookieSession):
     def user(self):
         from app.lib.database import db
         from app.models.user import User
-        return db.session.query(User).filter(id_==self.get('user_id')).first()
+        return db.session.query(User).filter(User.id_==self.get('user_id')).first()
 
     def get_dictionary(self):
         return {'user_id': self.get('user_id')}
