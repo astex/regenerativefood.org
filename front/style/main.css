@@ -121,7 +121,7 @@ header button, header .button {
 }
 
 section.body {
-  height: calc(100vh - 3em);
+  height: calc(100vh - 3em - 15px);
   overflow-y: auto;
   z-index: -2;
 }
