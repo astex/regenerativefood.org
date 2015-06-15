@@ -1,13 +1,14 @@
 define(
   [
-    'jquery', 'underscore', 'backbone', 'moment', 'models',
+    'jquery', 'underscore', 'backbone', 'moment', 'uuid', 'models',
     'text!templates/splash.utpl',
     'text!templates/header.utpl',
     'text!templates/list.utpl',
     'text!templates/entry.utpl',
+    'text!templates/comment.utpl',
     'text!templates/month.utpl',
     'underscore.crunch', 'jquery.deparam'
-  ], function($, _, B, moment, M, t_splash, t_header, t_list, t_entry, t_month) {
+  ], function($, _, B, moment, uuid, M, t_splash, t_header, t_list, t_entry, t_comment, t_month) {
     var V = {};
 
     V.Main = B.View.extend({
@@ -45,9 +46,10 @@ define(
             v.$el.append(
               (new V.List({
                 session: v.model,
-                model: ((new M.Entries()).setFilters(
-                  $.deparam(window.location.search.slice(1))
-                ))
+                model: ((new M.Entries()).setFilters(_.extend(
+                  $.deparam(window.location.search.slice(1)),
+                  { parent_id__null: true }
+                )))
               }))
                 .on('ready', function() { _.finish(cbs); })
                 .el
@@ -256,6 +258,7 @@ define(
     V.Entry = V.Base.extend({
       el: '<div class="entry"></div>',
       t: _.template(t_entry),
+      t_comment: _.template(t_comment),
 
       initialize: function(opts) {
         this.edit = opts.edit;
@@ -263,18 +266,40 @@ define(
       },
 
       fetch: function(cbs) {
-        if (this.edit)
-          return _.finish(cbs);
-        this.model.fetchSrc(cbs);
+        var v = this;
+        return _.parallel([
+          $.proxy(v.model.fetchSrc, v.model),
+          _.serial([
+            $.proxy(v.model.fetchComments, v.model),
+            _.parallel([
+              function(cbs_) {
+                v.model.comments.owners = new M.Users()
+                  .setFilters({verbosity: 'guest'});
+                return $.proxy(v.model.comments.fetchOwners, v.model.comments)(cbs_);
+              },
+              function(cbs_) {
+                return _.parallel(v.model.comments.map(function(comment) {
+                  return $.proxy(comment.fetchSrc, comment);
+                }))(cbs_);
+              }
+            ])
+          ])
+        ])(cbs);
       },
 
       render: function() {
-        V.Base.prototype.render.apply(this);
-        if (this.edit) {
-          this.$el.addClass('expanded');
-          this.$el.addClass('editing');
+        var v = this;
+
+        V.Base.prototype.render.apply(v);
+        if (v.edit) {
+          v.$el.addClass('expanded');
+          v.$el.addClass('editing');
+          v.$el.removeClass('comment-expanded');
         }
-        return this;
+        v.model.comments.each(function(comment) {
+          v.$('.comments').append(v.t_comment({model: comment, moment: moment}));
+        });
+        return v;
       },
 
       getTemplateArgs: function() {
@@ -290,7 +315,9 @@ define(
         'click [data-action=cancel]': 'cancel',
         'click [data-action=publish]': 'publish',
         'click [data-action=delete]': 'destroy',
-        'click [data-action=edit]': 'edit'
+        'click [data-action=edit]': 'edit',
+        'click [data-show=comments]': 'showComments',
+        'click [data-action=comment]': 'comment'
       },
 
       toggle: function() { if (!this.edit) this.$el.toggleClass('expanded'); },
@@ -342,6 +369,41 @@ define(
       edit: function() {
         this.edit = true;
         this.render();
+      },
+
+      showComments: function() { this.$el.toggleClass('comment-expanded'); },
+
+      comment: function() {
+        var v = this;
+        var src = v.$('[name=src]').val();
+
+        v.$('.error').html('');
+
+        if (!src)
+          v.error('Please add some content.');
+
+        var entry = new M.Entry({
+          parent_id: v.model.get('id'),
+          owner_id: v.session.get('user_id'),
+          src: src,
+          title: uuid.create().toString()
+        });
+        entry.owner = v.session.user;
+
+        entry.save({}, {
+          error: function() { v.error('We couldn\'t save that comment.'); },
+          success: function() {
+            entry.fetchSrc({
+              error: function() { v.error(
+                'We saved that comment, but had trouble displaying it.  Try reloading the page.'
+              ); },
+              success: function() {
+                v.model.comments.add(entry);
+                v.render();
+              }
+            });
+          }
+        });
       }
     });
 

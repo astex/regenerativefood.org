@@ -14,7 +14,9 @@ require.config({
 
     moment: 'lib/moment',
 
-    marked: 'lib/marked'
+    marked: 'lib/marked',
+
+    uuid: 'lib/uuid'
   }
 });
 

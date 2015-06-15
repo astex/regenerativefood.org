@@ -5,7 +5,16 @@
     <small class="orange"><%- model.owner.get('name') %></small>
   </div>
   <div class="content"><%= model.get('content') %></div>
+  <div class="c_comments">
+    <div class="comments"></div>
+    <textarea name="src"></textarea>
+    <div class="error"></div>
+    <button class="medium green" data-action="comment">Comment</button>
+  </div>
   <div class="buttons">
+    <button class="blue action medium" data-show="comments">
+      <i class="icon icon-comment"></i>
+    </button>
     <% if (session.user.get('is_admin') || session.get('user_id') == model.get('owner_id')) { %>
       <button class="red action medium" data-action="delete">
         <i class="icon icon-trash"></i>

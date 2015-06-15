@@ -225,11 +225,33 @@ section.body > h1 {
 }
 
 .entry .content {
+  /* transition: width .1s ease-in-out; */
   font-size: 1.2em;
   display: none;
   margin-top: 15px;
 }
-.entry.expanded .content { display: block; }
+.entry.expanded .content, .entry.expanded.comment-expanded .content { display: block }
+
+.entry .c_comments {
+  display: none;
+  margin-top: 15px;
+  font-size: 1.2em;
+  border-top: 1px solid #cccccc;
+}
+.entry.expanded.comment-expanded .c_comments { display: block; }
+
+.entry .comments {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+  overflow: auto;
+}
+.entry .comments:empty:before { content: 'No one has commented yet.'; }
+
+.entry .c_comments [name=src] {
+  width: calc(100% - 15px);
+  min-height: 50px;
+}
 
 .entry .buttons {
   position: absolute;
@@ -243,6 +265,7 @@ section.body > h1 {
 .entry .title {
   font-size: 1.3em;
   cursor: pointer;
+  clear: both;
 }
 .entry.editing .title {
   cursor: default;
@@ -253,10 +276,10 @@ section.body > h1 {
   font-size: inherit;
   padding: 3px 5px;
 }
-.entry [name=src] {
+.entry.editing [name=src] {
   width: calc(100% - 13px);
   min-height: 400px;
 }
-.entry [name=tags] { width: calc(100% - 50px - 61px - 90px); }
+.entry.editing [name=tags] { width: calc(100% - 50px - 61px - 90px); }
 
 .clear { clear: both; }

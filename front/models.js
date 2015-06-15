@@ -22,7 +22,7 @@ define([
           return data.data;
         }
       }, {
-        relatedFetcher: function(opts) {
+        oneToOneFetcher: function(opts) {
           return function(cbs) {
             var m = this;
             if (!m.get(opts.key))
@@ -30,6 +30,22 @@ define([
             (m[opts.name] = m[opts.name] || new opts.Model())
               .set('id', m.get(opts.key))
               .fetch(cbs);
+          };
+        },
+        oneToManyFetcher: function(opts) {
+          return function(cbs) {
+            var m = this;
+            var filters = {};
+            filters[opts.filter_key] = m.get(m.idAttribute);
+            (m[opts.name] = m[opts.name] || new opts.Collection())
+              .setFilters(filters);
+            return _.serial([
+              $.proxy(m[opts.name].fetch, m[opts.name]),
+              function(cbs_) {
+                m[opts.name].each(function(model) { model[opts.reverse_name] = m; });
+                _.finish(cbs_);
+              }
+            ])(cbs);
           };
         }
       }
@@ -49,7 +65,7 @@ define([
 
         parse: function(data) { return data.data; }
       }, {
-        many2OneFetcher: function(opts) {
+        manyToOneFetcher: function(opts) {
           return function(cbs) {
             var c = this;
             c[opts.name] = c[opts.name] || new opts.Collection();
@@ -74,7 +90,7 @@ define([
 
     M.Session = M.Model.extend({
       idAttribute: 'user_id',
-      fetchUser: M.Model.relatedFetcher({Model: M.User, name: 'user', key: 'user_id'})
+      fetchUser: M.Model.oneToOneFetcher({Model: M.User, name: 'user', key: 'user_id'})
     }, {base_url: config.url + '/session/'});
 
     M.Entry = M.Model.extend({
@@ -85,11 +101,21 @@ define([
           m.set('content', parse(m.get('src')));
           _.finish(cbs);
         });
+      },
+      fetchComments: function(cbs) {
+        // This is wrapped in a function since M.Entries cannot be defined
+        //  until after M.Entry.
+        return $.proxy(M.Model.oneToManyFetcher({
+          filter_key: 'parent_id',
+          name: 'comments',
+          reverse_name: 'parent',
+          Collection: M.Entries
+        }), this)(cbs);
       }
     }, {base_url: config.url + '/entry/'});
     M.Entries = M.Collection.extend({
       model: M.Entry,
-      fetchOwners: M.Collection.many2OneFetcher({
+      fetchOwners: M.Collection.manyToOneFetcher({
         Collection: M.Users,
         name: 'owners',
         model_name: 'owner',
