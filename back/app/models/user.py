@@ -9,7 +9,7 @@ class User(ModelMixin, db.Model):
     email = db.Column(
         db.Unicode(length=255), nullable=False, unique=True, index=True
     )
-    _password = db.Column('password', db.Unicode(length=255), nullable=False)
+    _password = db.Column('password', db.Binary(length=60), nullable=False)
 
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
 
