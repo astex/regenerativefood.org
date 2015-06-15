@@ -247,10 +247,7 @@ define(
         var entry = new M.Entry({owner_id: this.session.get('user_id')});
         entry.owner = this.session.user;
 
-        var entry_view = (new V.Entry({session: this.session, edit: true, model: entry}));
-        entry_view.on('ready', function() { entry_view.$('[name=title]').focus(); });
-
-        this.$el.prepend(entry_view.el);
+        this.$el.prepend((new V.Entry({session: this.session, edit: true, model: entry})).el);
       }
     });
 
