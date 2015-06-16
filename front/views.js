@@ -8,7 +8,10 @@ define(
     'text!templates/comment.utpl',
     'text!templates/month.utpl',
     'underscore.crunch', 'jquery.deparam'
-  ], function($, _, B, moment, uuid, M, t_splash, t_header, t_list, t_entry, t_comment, t_month) {
+  ], function(
+      $, _, B, moment, uuid, M,
+      t_splash, t_header, t_list, t_entry, t_comment, t_month
+    ) {
     var V = {};
 
     V.Main = B.View.extend({
@@ -115,7 +118,8 @@ define(
       events: {
         'click [data-action=new], [data-action=old]': 'toggleSignup',
         'click [data-action=signup]': 'signup',
-        'click [data-action=login]': 'login'
+        'click [data-action=login]': 'login',
+        'submit form': 'submit'
       },
 
       toggleSignup: function() {
@@ -176,6 +180,17 @@ define(
           success: function(m) { (new V.Main({model: m})); },
           error: function(m, r) { v.error('There was a problem.'); console.log(r); }
         });
+      },
+
+      submit: function(e) {
+        e.preventDefault();
+        var login = this.$('[data-action=login]');
+        var signup = this.$('[data-action=signup]');
+
+        if (login.is(':visible'))
+          login.click();
+        else if (signup.is(':visible'))
+          signup.click();
       }
     });
 

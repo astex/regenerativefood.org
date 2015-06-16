@@ -1,4 +1,4 @@
-<div class="jumbo">
+<form class="jumbo">
   <h1>Regenerative food systems</h1>
   <h2>Food for future generations</h2>
   <div class="login">
@@ -9,9 +9,9 @@
   </div>
   <div class="error"></div>
   <div class="buttons">
-    <button class="big" data-action="new">I don't have an account</button>
-    <button class="big" data-action="old">I already have an account</button>
+    <button type="button" class="big" data-action="new">I don't have an account</button>
+    <button type="button" class="big" data-action="old">I already have an account</button>
     <button class="big blue" data-action="login">Log in</button>
     <button class="big blue" data-action="signup">Sign up</button>
   </div>
-</div>
+</form>
