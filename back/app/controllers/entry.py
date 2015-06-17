@@ -44,5 +44,7 @@ class EntryController(RestController):
         return super(EntryController, self).post(data, filter_data)
 
     def delete(self, id_, filter_data):
-        db.session.query(EntryTag).filter(EntryTag.entry_id==id_).delete()
+        db.session.query(EntryTag).filter(EntryTag.entry_id==id_).delete(
+            synchronize_session=False
+        )
         return super(EntryController, self).delete(id_, filter_data)
