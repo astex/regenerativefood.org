@@ -1,6 +1,6 @@
 import uuid
 from sqlalchemy import and_
-from app.lib.database import db
+from app.lib.database import db, commit
 from app.controllers.base import RestController
 from app.models.entry import Entry, EntryTag, Tag
 
@@ -42,3 +42,7 @@ class EntryController(RestController):
         data['slug'] = slug
 
         return super(EntryController, self).post(data, filter_data)
+
+    def delete(self, id_, filter_data):
+        db.session.query(EntryTag).filter(EntryTag.entry_id==id_).delete()
+        return super(EntryController, self).delete(id_, filter_data)
