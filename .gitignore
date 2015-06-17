@@ -10,3 +10,7 @@ uwsgi.log
 
 # Config
 config.*
+
+# Vim
+*.swp
+*.swo
