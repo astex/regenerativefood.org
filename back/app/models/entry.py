@@ -43,6 +43,11 @@ class Entry(ModelMixin, db.Model):
         ]
         db.session.add_all([e for e in entry_tags if not e.id_])
         commit()
+        db.session.query(EntryTag).filter(
+            ~EntryTag.id_.in_([e.id_ for e in entry_tags]),
+            EntryTag.entry_id==self.id_
+        ).delete(synchronize_session=False)
+        commit()
 
 
 class EntryTag(ModelMixin, db.Model):
