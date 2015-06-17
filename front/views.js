@@ -333,6 +333,7 @@ define(
         v.model.comments.each(function(comment) {
           v.$('.comments').append(v.t_comment({model: comment, moment: moment}));
         });
+        v.$('span.delete').hide();
         return v;
       },
 
@@ -351,6 +352,7 @@ define(
         'click [data-action=delete]': 'destroy',
         'click [data-action=edit]': 'edit',
         'click [data-show=comments]': 'showComments',
+        'click [data-show=delete]': 'showDelete',
         'click [data-action=comment]': 'comment'
       },
 
@@ -402,7 +404,7 @@ define(
         });
       },
 
-      destroy: function() {
+      destroy: function(e) {
         var v = this;
         v.model.destroy({
           success: function() { v.remove(); },
@@ -416,6 +418,10 @@ define(
       },
 
       showComments: function() { this.$el.toggleClass('comment-expanded'); },
+
+      showDelete: function() {
+        this.$('.delete').toggle();
+      },
 
       comment: function() {
         var v = this;

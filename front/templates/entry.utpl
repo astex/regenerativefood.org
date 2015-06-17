@@ -29,9 +29,15 @@
       <i class="icon icon-comment"></i> <%- model.comments.length %>
     </button>
     <% if (session.user.get('is_admin') || session.get('user_id') == model.get('owner_id')) { %>
-      <button class="red action medium" data-action="delete">
+      <button class="red action medium delete" data-show="delete">
         <i class="icon icon-trash"></i>
       </button>
+      <span class="button white action medium delete constant">
+        Are you sure?
+        <button class="text red" data-action="delete">Yes, delete this entry.</button>
+        <button class="text gray"data-show="delete">No, never mind.</button>
+      </span>
+      </span>
       <button class="orange action medium" data-action="edit">
         <i class="icon icon-pencil"></i>
       </button>

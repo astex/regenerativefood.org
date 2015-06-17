@@ -45,10 +45,12 @@ button, a.button {
   border: none;
   outline: none;
 }
-button:hover, .button:hover, button.active, .button.active {
-  background: rgba(0, 0, 0, 0.2);
-}
+button:not(.constant):hover, .button:not(.constant):hover { background: rgba(0, 0, 0, 0.2); }
 button.raised, .button.raised { box-shadow: 3px 3px 3px #999; }
+button.text, .button.text {
+  background-color: inherit !important;
+  transition: color .3s ease;
+}
 button.blue, .button.blue, button.orange, .button.orange, button.red, .button.red,
 button.white, .button.white, button.green, .button.green {
   transition: background-color .1s ease-in-out;
@@ -57,29 +59,39 @@ button.blue, .button.blue {
   background-color: #4520ff;
   color: #ffffff;
 }
-button.blue:hover, .button.hover { background-color: #3510dd; }
+button.blue:not(.constant):hover, .button.blue:not(.constant):hover { background-color: #3510dd; }
+button.text.blue, .button.text.blue { color: #4520ff; }
+button.text.blue:not(.constant):hover, .button.text.blue:not(.constant):hover { color: #3510dd; }
 button.orange, .button.orange {
   background-color: #ff9f00;
   color: #ffffff;
 }
-button.orange:hover, .button.orange:hover { background-color: #aa6a00; }
+button.orange:not(.constant):hover, .button.orange:not(.constant):hover { background-color: #aa6a00; }
+button.text.orange, .button.text.orange { color: #ff9f00; }
+button.text.orange:not(.constant):hover, .button.text.orange:not(.constant):hover { color: #aa6a00; }
 button.red, .button.red {
   background-color: #ff0000;
   color: #ffffff;
 }
-button.red:hover, .button.red:hover { background-color: #aa0000; }
+button.red:not(.constant):hover, .button.red:not(.constant):hover { background-color: #aa0000; }
+button.text.red, .button.text.red { color: #ff6666; }
+button.text.red:not(.constant):hover, .button.text.red:not(.constant):hover { color: #ff0000; }
 button.white, .button.white { background-color: #ffffff; }
-button.white:hover, .button.white:hover { background-color: #dddddd; }
+button.white:not(.constant):hover, .button.white:not(.constant):hover { background-color: #dddddd; }
 button.gray, .button.gray {
   background-color: #dddddd;
   color: #666666;
 }
-button.gray:hover, .button.gray:hover { background-color: #bbbbbb; }
+button.gray:not(.constant):hover, .button.gray:not(.constant):hover { background-color: #bbbbbb; }
+button.text.gray, .button.text.gray { color: #999; }
+button.text.gray:not(.constant):hover, .button.text.gray:not(.constant):hover { color: #444; }
 button.green, .button.green {
   background-color: #3a6900;
   color: #ffffff;
 }
-button.green:hover, .button.green:hover { background-color: #305800; }
+button.green:not(.constant):hover, .button.green:not(.constant):hover { background-color: #305800; }
+button.text.green, .button.text.green { color: #3a6900; }
+button.text.green:not(.constant):hover, .button.text.green:not(.constant):hover { color: #305800; }
 button.small, .button.small { margin-right: 3px; padding: 2px 4px; font-size: .8em; }
 button.medium, .button.medium { margin-right: 15px; padding: 5px 10px; font-size: 1.1em; }
 button.big, .button.big { padding: 15px; font-size: 1.3em; }
@@ -93,7 +105,7 @@ button.action.big, .button.action.big {
   padding: 20px;
   font-size: 1.5em;
 }
-button.action:hover, .button.action:hover { box-shadow: 0px 3px 5px #666; }
+button.action:not(.constant):hover, .button.action:not(.constant):hover { box-shadow: 0px 3px 5px #666; }
 
 label { display: block; }
 
