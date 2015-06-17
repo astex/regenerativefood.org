@@ -24,8 +24,9 @@ class Entry(ModelMixin, db.Model):
         ]
         return d
 
-    def update(self, d):
-        names = [t.strip().lower() for t in d['tags'] if t.strip()]
+    def parse_tags(self, tag_names):
+        """Parses a list of tag names into EntryTags and Tags for an entry."""
+        names = [t.strip().lower() for t in tag_names if t.strip()]
         tags = [
             db.session.query(Tag).filter(Tag.name == name).first() or
             Tag(name=name)
@@ -42,8 +43,6 @@ class Entry(ModelMixin, db.Model):
         ]
         db.session.add_all([e for e in entry_tags if not e.id_])
         commit()
-
-        super(Entry, self).update(d)
 
 
 class EntryTag(ModelMixin, db.Model):

@@ -41,7 +41,17 @@ class EntryController(RestController):
             slug = slug + uuid.uuid4()
         data['slug'] = slug
 
-        return super(EntryController, self).post(data, filter_data)
+        tags = data.pop('tags', [])
+
+        model = super(EntryController, self).post(data, filter_data)
+        model.parse_tags(tags)
+
+        return model
+
+    def put(self, id_, data, filter_data):
+        model = super(EntryController, self).put(id_, data, filter_data)
+        model.parse_tags(data.get('tags', []))
+        return model
 
     def delete(self, id_, filter_data):
         db.session.query(EntryTag).filter(EntryTag.entry_id==id_).delete(
