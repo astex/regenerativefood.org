@@ -259,7 +259,8 @@ define(
       },
 
       events: {
-        'click [data-action=new]': 'new_'
+        'click [data-action=new]': 'new_',
+        'click [data-update=filters]': 'filter'
       },
 
       new_: function() {
@@ -267,6 +268,18 @@ define(
         entry.owner = this.session.user;
 
         this.$el.prepend((new V.Entry({session: this.session, edit: true, model: entry})).el);
+      },
+
+      filter: function(e) {
+        var $el = $(e.currentTarget);
+        var url = window.location.href.split('?')[0];
+        var filters = $.deparam(window.location.search.slice(1));
+        if ($el.data('type') == 'list') {
+          filters[$el.attr('name')] = filters[$el.attr('name')] || [];
+          if (!_.contains(filters[$el.attr('name')], $el.attr('value')))
+            filters[$el.attr('name')].push($el.attr('value'));
+        }
+        window.location.href = url + '?' + $.param(filters);
       }
     });
 
