@@ -294,3 +294,7 @@ section.body > h1 {
   text-transform: capitalize;
   margin-top: 7px;
 }
+.tag.green {
+  border-color: #3a6900;
+  background-color: #66aa66;
+}

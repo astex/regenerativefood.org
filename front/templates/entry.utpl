@@ -6,7 +6,14 @@
     <div>
       <% _.each(model.get('tags'), function(tag) { %>
         <button
-          class="gray small tag"
+          class="
+            small tag
+            <% if (_.contains(model.collection.filters.tag_names, tag)) { %>
+              green
+            <% } else {%>
+              gray
+            <% } %>
+          "
           data-update="filters"
           data-type="list"
           name="tag_names"
