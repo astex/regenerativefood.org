@@ -1,19 +1,12 @@
 import six
 from werkzeug.exceptions import NotFound
-from app.lib.database import db
+from app.lib.database import db, commit
 
 
 class RestController(object):
     Model = None
 
     filters = {}
-
-    def commit(self):
-        try:
-            db.session.commit()
-        except Exception as e:
-            db.session.rollback()
-            raise e
 
     def filter_(self, q, filter_data):
         for k, f in six.iteritems(self.filters):
@@ -38,18 +31,18 @@ class RestController(object):
     def post(self, data, filter_data):
         model = self.Model(**data)
         db.session.add(model)
-        self.commit()
+        commit()
         return model
 
     def put(self, id_, data, filter_data):
         model = self.get(id_)
         model.update(data)
         db.session.add(model)
-        self.commit()
+        commit()
         return model
 
     def delete(self, id_, filter_data):
         model = self.get(id_)
         db.session.delete(model)
-        self.commit()
+        commit()
         return {}
