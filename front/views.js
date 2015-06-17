@@ -354,7 +354,11 @@ define(
         'click [data-action=comment]': 'comment'
       },
 
-      toggle: function() { if (!this.edit) this.$el.toggleClass('expanded'); },
+      toggle: function(e) {
+        if (!$(e.target).is('button'))
+          if (!this.edit)
+            this.$el.toggleClass('expanded');
+      },
 
       set: function(e) {
         var $el = $(e.currentTarget);
