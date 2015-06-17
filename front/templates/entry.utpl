@@ -37,7 +37,12 @@
   <div class="content">
     <textarea name="src" placeholder="Type your post here."><%= model.get('src') %></textarea>
   </div>
-  <input name="tags" placeholder="Tags">
+  <input
+    name="tags"
+    data-type="list"
+    placeholder="Tags"
+    <% if (model.get('tags')) { %>value="<%- model.get('tags').join(', ') %>"<% } %>
+    >
   <div class="error"></div>
   <div class="buttons">
     <button class="white action medium" data-action="cancel">

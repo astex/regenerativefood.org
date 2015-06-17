@@ -345,7 +345,13 @@ define(
 
       set: function(e) {
         var $el = $(e.currentTarget);
-        this.model.set($el.attr('name'), $el.val());
+        var data = {};
+        data[$el.attr('name')] = (
+          $el.data('type') == 'list' ?
+            _.map($el.val().split(','), function(t) { return $.trim(t); }) :
+          $el.val()
+        );
+        this.model.set(data);
       },
 
       cancel: function() {
