@@ -3,7 +3,7 @@
     <%- model.get('title') %>
     <small><%- moment(model.get('created')).format('L LT') %></small>
     <small class="orange"><%- model.owner.get('name') %></small>
-    <div class="right">
+    <div>
       <% _.each(model.get('tags'), function(tag) { %>
         <button
           class="gray small tag"

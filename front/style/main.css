@@ -280,4 +280,5 @@ section.body > h1 {
   border: 1px solid #999;
   border-radius: 10px;
   text-transform: capitalize;
+  margin-top: 7px;
 }
