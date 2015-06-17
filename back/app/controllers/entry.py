@@ -22,9 +22,11 @@ class EntryController(RestController):
 
         tags = filter_data.getlist('tag_names[]')
         if tags:
-            q = q.join(EntryTag).join(Tag).filter(and_(*[
-                Tag.name == t for t in tags
-            ]))
+            q = q.filter(*[
+                db.session.query(EntryTag).join(Tag).filter(
+                    Tag.name == t, EntryTag.entry_id == Entry.id_
+                ).exists() for t in tags
+            ])
 
         return q
 
