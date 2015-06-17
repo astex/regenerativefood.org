@@ -1,5 +1,5 @@
 import uuid
-from sqlalchemy import or_
+from sqlalchemy import and_
 from app.lib.database import db
 from app.controllers.base import RestController
 from app.models.entry import Entry, EntryTag, Tag
@@ -20,7 +20,7 @@ class EntryController(RestController):
     def filter_(self, q, filter_data):
         q = super(EntryController, self).filter_(q, filter_data)
 
-        tags = filter_data.getlist('tag_names')
+        tags = filter_data.getlist('tag_names[]')
         if tags:
             q = q.join(EntryTag).join(Tag).filter(and_(*[
                 Tag.name == t for t in tags
