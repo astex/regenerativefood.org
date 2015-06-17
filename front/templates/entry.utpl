@@ -3,6 +3,19 @@
     <%- model.get('title') %>
     <small><%- moment(model.get('created')).format('L LT') %></small>
     <small class="orange"><%- model.owner.get('name') %></small>
+    <div class="right">
+      <% _.each(model.get('tags'), function(tag) { %>
+        <button
+          class="gray small tag"
+          data-update="filters"
+          data-type="list"
+          name="tag_names"
+          value="<%- tag %>"
+          >
+          <%- tag %>
+        </button>
+      <% }); %>
+    </div>
   </div>
   <div class="content"><%= model.get('content') %></div>
   <div class="c_comments">
