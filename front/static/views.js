@@ -276,8 +276,10 @@ define(
         var filters = $.deparam(window.location.search.slice(1));
         if ($el.data('type') == 'list') {
           filters[$el.attr('name')] = filters[$el.attr('name')] || [];
-          if (!_.contains(filters[$el.attr('name')], $el.attr('value')))
-            filters[$el.attr('name')].push($el.attr('value'));
+          if (!_.contains(filters[$el.attr('name')], $el.val()))
+            filters[$el.attr('name')].push($el.val());
+          else
+            filters[$el.attr('name')] = _.without(filters[$el.attr('name')], $el.val());
         }
         window.location.href = url + '?' + $.param(filters);
       }
