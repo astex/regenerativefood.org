@@ -59,7 +59,7 @@ button.blue, .button.blue {
   background-color: #4520ff;
   color: #ffffff;
 }
-button.blue:not(.constant):hover, .button.blue:not(.constant):hover { background-color: #3510dd; }
+button.blue:not(.constant):hover, .button.blue:not(.constant):hover { background-color: #000099; }
 button.text.blue, .button.text.blue { color: #4520ff; }
 button.text.blue:not(.constant):hover, .button.text.blue:not(.constant):hover { color: #3510dd; }
 button.orange, .button.orange {
