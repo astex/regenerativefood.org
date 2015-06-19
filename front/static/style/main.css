@@ -1,7 +1,7 @@
 body {
   color: #000000;
   background-color: #fdfffd;
-  background-image: url('/img/leaf.png');
+  background-image: url('/static/img/leaf.png');
   background-size: 200px;
   background-repeat: no-repeat;
   background-position: center;
@@ -133,7 +133,7 @@ section.body {
 }
 section.body.splash {
   height: 100vh;
-  background-image: url('/img/hill.jpg');
+  background-image: url('/static/img/hill.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

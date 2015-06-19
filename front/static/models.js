@@ -1,5 +1,5 @@
 define([
-    'json!/config.json', 'jquery', 'underscore', 'backbone', 'underscore.crunch'
+    'json!config.json', 'jquery', 'underscore', 'backbone', 'underscore.crunch'
   ], function(config, $, _, B) {
     var M = {};
 
