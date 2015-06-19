@@ -281,7 +281,9 @@ define(
           else
             filters[$el.attr('name')] = _.without(filters[$el.attr('name')], $el.val());
         }
-        window.location.href = url + '?' + $.param(filters);
+        window.history.pushState(filters, '', url + '?' + $.param(filters));
+        this.model.setFilters(filters);
+        this.initialize({session: this.session});
       }
     });
 
