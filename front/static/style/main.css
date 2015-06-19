@@ -47,13 +47,13 @@ button, a.button {
 }
 button:not(.constant):hover, .button:not(.constant):hover { background: rgba(0, 0, 0, 0.2); }
 button.raised, .button.raised { box-shadow: 3px 3px 3px #999; }
-button.text, .button.text {
-  background-color: inherit !important;
-  transition: color .3s ease;
-}
 button.blue, .button.blue, button.orange, .button.orange, button.red, .button.red,
 button.white, .button.white, button.green, .button.green {
   transition: background-color .1s ease-in-out;
+}
+button.text, .button.text {
+  background-color: inherit !important;
+  transition: color .1s ease;
 }
 button.blue, .button.blue {
   background-color: #4520ff;
